@@ -29,10 +29,7 @@ public class HealthManager : MonoBehaviour
     public void Death()
     {
         Destroy(gameObject);
-        _gameManager.setGoldText(tresure);
+        _gameManager.setGold(tresure);
+        _gameManager.SpawnMonster();
     }
-    //     IEnumerator  SendGold(){
-    // yield return new WaitForSeconds(1);
-    //             _gameManager.setGoldText(tresure);
-    //     }
 }
