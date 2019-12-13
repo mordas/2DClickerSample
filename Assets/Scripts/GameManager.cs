@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     private int totalGold = 0;
     void Start()
     {
-        // _goldText.text = totalGold.ToString();
     }
 
     void Update()
