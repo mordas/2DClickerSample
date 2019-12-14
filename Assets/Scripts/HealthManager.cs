@@ -11,6 +11,8 @@ public class HealthManager : MonoBehaviour
     void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        _gameManager.InitializeHealthBar(MaxHealth);
+        _gameManager.HealthBarTrigger(true);
     }
 
     void Update()
@@ -25,11 +27,13 @@ public class HealthManager : MonoBehaviour
             Death();
         }
         Health = health;
+        _gameManager.ShowDamage(damage);
     }
     public void Death()
     {
         Destroy(gameObject);
         _gameManager.setGold(tresure);
         _gameManager.SpawnMonster();
+        _gameManager.HealthBarTrigger(false);
     }
 }

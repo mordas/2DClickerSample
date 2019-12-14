@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Text _goldText;
     [SerializeField] private GameObject _goldPrefab;
+    [SerializeField] private Slider _healthBar;
     private int totalGold = 0;
     private AudioSource _goldSound;
     [SerializeField]
@@ -15,7 +16,9 @@ private bool _needSpawn = false;
     private void Start()
     {
         _goldSound = GetComponent<AudioSource>();
+        SpawnMonster();
     }
+
 
     public void setGold(int gold)
     {
@@ -32,7 +35,8 @@ private bool _needSpawn = false;
     }
      public void SpawnMonster()
      {
-         StartCoroutine(SpawnCorutine(monsters[0]));
+        int monsterIndex = Random.Range(0,monsters.Length);
+         StartCoroutine(SpawnCorutine(monsters[monsterIndex]));
      }
 
     IEnumerator SpawnCorutine(GameObject monster)
@@ -44,6 +48,18 @@ private bool _needSpawn = false;
 
     public void SetNeedSpawn() {
         _needSpawn = true;
+    }
+
+    public void InitializeHealthBar(int maxHealth){
+_healthBar.maxValue = maxHealth;
+_healthBar.value = maxHealth;
+    }
+
+    public void ShowDamage(int d){
+        _healthBar.value -= d;
+    }
+    public void HealthBarTrigger(bool trigger){
+            _healthBar.gameObject.SetActive(trigger); 
     }
 
 }
