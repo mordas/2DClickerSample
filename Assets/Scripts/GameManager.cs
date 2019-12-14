@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text _goldText,_damageText;
     [SerializeField] private GameObject _goldPrefab;
     [SerializeField] private Slider _healthBar;
+    public GameObject Hero;
     private int totalGold = 0;
     private AudioSource _goldSound;
     [SerializeField]
