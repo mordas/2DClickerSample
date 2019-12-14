@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Text _goldText;
+    [SerializeField] private Text _goldText,_damageText;
     [SerializeField] private GameObject _goldPrefab;
     [SerializeField] private Slider _healthBar;
     private int totalGold = 0;
@@ -12,11 +12,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject[] monsters;
 
-private bool _needSpawn = false;
+    private bool _needSpawn = false;
+    public int damage = 10;
     private void Start()
     {
         _goldSound = GetComponent<AudioSource>();
         SpawnMonster();
+        UpdateDamageText(damage);
     }
 
 
@@ -33,11 +35,11 @@ private bool _needSpawn = false;
         _goldText.text = totalGold.ToString();
         _goldSound.Play();
     }
-     public void SpawnMonster()
-     {
-        int monsterIndex = Random.Range(0,monsters.Length);
-         StartCoroutine(SpawnCorutine(monsters[monsterIndex]));
-     }
+    public void SpawnMonster()
+    {
+        int monsterIndex = Random.Range(0, monsters.Length);
+        StartCoroutine(SpawnCorutine(monsters[monsterIndex]));
+    }
 
     IEnumerator SpawnCorutine(GameObject monster)
     {
@@ -46,20 +48,27 @@ private bool _needSpawn = false;
 
     }
 
-    public void SetNeedSpawn() {
+    public void SetNeedSpawn()
+    {
         _needSpawn = true;
     }
 
-    public void InitializeHealthBar(int maxHealth){
-_healthBar.maxValue = maxHealth;
-_healthBar.value = maxHealth;
+    public void InitializeHealthBar(int maxHealth)
+    {
+        _healthBar.maxValue = maxHealth;
+        _healthBar.value = maxHealth;
     }
 
-    public void ShowDamage(int d){
+    public void ShowDamage(int d)
+    {
         _healthBar.value -= d;
     }
-    public void HealthBarTrigger(bool trigger){
-            _healthBar.gameObject.SetActive(trigger); 
+    public void HealthBarTrigger(bool trigger)
+    {
+        _healthBar.gameObject.SetActive(trigger);
+    }
+    public void UpdateDamageText(int d){
+        _damageText.text = d.ToString();
     }
 
 }
