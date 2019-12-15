@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     private bool _needSpawn = false;
     public int damage = 10;
+    [SerializeField] private Transform _spawnPos;
     private void Start()
     {
         _goldSound = GetComponent<AudioSource>();
@@ -30,8 +31,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UpdateGoldText());
         Destroy(goldObject, 1f);
     }
-    public void setGold()
-    {
+    public void setGold(){
         _goldText.text = totalGold.ToString();
     }
     IEnumerator UpdateGoldText()
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     IEnumerator SpawnCorutine(GameObject monster)
     {
         yield return new WaitForSeconds(1);
-        Instantiate(monster, new Vector3(0.05f, -1.4f, 0), Quaternion.identity);
+        Instantiate(monster, _spawnPos.position, Quaternion.identity);
 
     }
 
