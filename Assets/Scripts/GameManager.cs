@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Text _goldText,_damageText;
+    [SerializeField] private Text _goldText, _damageText;
     [SerializeField] private GameObject _goldPrefab;
     [SerializeField] private Slider _healthBar;
     // public GameObject Hero;
-    private int totalGold = 0;
+    public int totalGold = 0;
     private AudioSource _goldSound;
     [SerializeField]
     private GameObject[] monsters;
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
         GameObject goldObject = Instantiate(_goldPrefab, new Vector3(3.35f, -3.87f, 0), Quaternion.identity);
         StartCoroutine(UpdateGoldText());
         Destroy(goldObject, 1f);
+    }
+    public void setGold()
+    {
+        _goldText.text = totalGold.ToString();
     }
     IEnumerator UpdateGoldText()
     {
@@ -68,7 +72,8 @@ public class GameManager : MonoBehaviour
     {
         _healthBar.gameObject.SetActive(trigger);
     }
-    public void UpdateDamageText(int d){
+    public void UpdateDamageText(int d)
+    {
         _damageText.text = d.ToString();
     }
 
