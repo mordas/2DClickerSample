@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private bool _needSpawn = false;
     public int damage = 10;
     [SerializeField] private Transform _spawnPos;
+    private int _monsterCount = 0;
     private void Start()
     {
         _goldSound = GetComponent<AudioSource>();
@@ -31,7 +32,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UpdateGoldText());
         Destroy(goldObject, 1f);
     }
-    public void setGold(){
+    public void setGold()
+    {
         _goldText.text = totalGold.ToString();
     }
     IEnumerator UpdateGoldText()
@@ -42,7 +44,13 @@ public class GameManager : MonoBehaviour
     }
     public void SpawnMonster()
     {
-        int monsterIndex = Random.Range(0, monsters.Length);
+        _monsterCount++;
+        int randomMaxValue = _monsterCount/2+1;
+
+        if(randomMaxValue >= monsters.Length){
+            randomMaxValue = monsters.Length;
+        }
+         int monsterIndex = Random.Range(0, randomMaxValue);
         StartCoroutine(SpawnCorutine(monsters[monsterIndex]));
     }
 
