@@ -13,11 +13,20 @@ public class UpgadeDamage : MonoBehaviour
     public Image icon;
     [SerializeField] private GameObject _damageUpgradeAnimPref;
     [SerializeField] private GameManager _gameManager;
-    // Start is called before the first frame update
+    [SerializeField]
+    private bool rubyPrice = false;
     void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        UpgradeCost.text = Price.ToString();
+        if (!rubyPrice)
+        {
+            UpgradeCost.text = Price.ToString();
+        }
+        else
+        {
+            UpgradeCost.text = 1.ToString();
+        }
+
         UpgradeDamage.text = Damage.ToString();
 
     }
@@ -31,17 +40,15 @@ public class UpgadeDamage : MonoBehaviour
     {
         int currentGold = _gameManager.totalGold;
         int currentDamage = _gameManager.damage;
-        if (Price <= currentGold)
+        if (Price <= currentGold && !rubyPrice || _gameManager.rubies >= 1 && rubyPrice)
         {
             if (!isHero)
             {
                 PlusDamage(currentGold, currentDamage);
-
             }
             else
             {
                 PlusAlie(currentGold);
-                //Destroy(gameObject);
             }
         }
         else
@@ -54,7 +61,14 @@ public class UpgadeDamage : MonoBehaviour
     }
     public void PlusDamage(int currentGold, int currentDamage)
     {
-        currentGold -= Price;
+        if (!rubyPrice)
+        {
+            currentGold -= Price;
+        }
+        else
+        {
+            _gameManager.minusRuby();
+        }
         currentDamage += Damage;
         _gameManager.UpdateDamageText(currentDamage);
         _gameManager.damage = currentDamage;
@@ -68,7 +82,14 @@ public class UpgadeDamage : MonoBehaviour
     }
     public void PlusAlie(int currentGold)
     {
-        currentGold -= Price;
+        if (!rubyPrice)
+        {
+            currentGold -= Price;
+        }
+        else
+        {
+            _gameManager.minusRuby();
+        }
         _gameManager.totalGold = currentGold;
         _gameManager.setGold();
         GameObject newHero = Instantiate(_heroPref, new Vector3(Random.Range(5f, 8f), -2.12f, 0), Quaternion.identity);

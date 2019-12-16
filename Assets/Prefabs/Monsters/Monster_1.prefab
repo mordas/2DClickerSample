@@ -158,3 +158,4 @@ MonoBehaviour:
   MaxHealth: 500
   Health: 500
   tresure: 500
+  Legendary: 1

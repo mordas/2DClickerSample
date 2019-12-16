@@ -8,6 +8,7 @@ public class HealthManager : MonoBehaviour
     public int Health = 100;
     public int tresure = 100;
     private GameManager _gameManager;
+    public bool Legendary = false;
     void Start()
     {
         _gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
@@ -35,5 +36,11 @@ public class HealthManager : MonoBehaviour
         _gameManager.setGold(tresure);
         _gameManager.SpawnMonster();
         _gameManager.HealthBarTrigger(false);
+        if(Legendary){
+            int rubySpawnChance = 50;
+            if(Random.Range(0,100) < rubySpawnChance){
+            _gameManager.SpawnRuby();
+            }
+        }
     }
 }
